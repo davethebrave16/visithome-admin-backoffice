@@ -29,5 +29,5 @@ cp -r visithome-admin-backoffice/dist/* build/
 
 echo "✅ Build completed successfully!"
 echo "📁 Files are ready in the 'build/' directory"
-echo "🌐 You can now deploy using: firebase deploy --only hosting"
+echo "🌐 You can now deploy using: firebase deploy --only hosting:YOUR_HOSTING_ID"
 echo "   Or upload the contents of 'build/' directory manually to Firebase Console"

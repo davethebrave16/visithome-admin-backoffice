@@ -105,6 +105,7 @@ The project includes automated workflows:
 3. Add these secrets:
    - `FIREBASE_PROJECT_ID`: Your Firebase project ID
    - `FIREBASE_TOKEN`: Your Firebase CI token
+   - `FIREBASE_HOSTING_ID`: Your Firebase hosting site ID
    - `FIREBASE_API_KEY`: Your Firebase API key
    - `FIREBASE_AUTH_DOMAIN`: Your Firebase auth domain
    - `FIREBASE_STORAGE_BUCKET`: Your Firebase storage bucket
@@ -147,8 +148,10 @@ This script will:
 
 Then deploy using:
 ```bash
-firebase deploy --only hosting
+firebase deploy --only hosting:YOUR_HOSTING_ID
 ```
+
+Replace `YOUR_HOSTING_ID` with your actual Firebase hosting site ID.
 
 This script will automatically:
 1. Build the React app

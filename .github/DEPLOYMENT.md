@@ -35,13 +35,21 @@ To enable automated deployment, you need to configure these secrets in your GitH
 - `FIREBASE_MESSAGING_SENDER_ID`: Your Firebase messaging sender ID
 - `FIREBASE_APP_ID`: Your Firebase app ID
 
-### Authentication Secrets
+### Deployment Secrets
 - `FIREBASE_TOKEN`: Firebase CI token for deployment authentication
+- `FIREBASE_HOSTING_ID`: Your Firebase hosting site ID
+
+### Application Secrets
 - `AUTH_ACCOUNTS`: Comma-separated list of authorized email addresses
 
 ### Getting Firebase Configuration
 All Firebase configuration values can be found in:
 Firebase Console → Project Settings → General → Your apps → Web app config
+
+### Getting Firebase Hosting ID
+1. Go to Firebase Console → Hosting
+2. Find your hosting site
+3. The site ID is shown in the hosting dashboard (usually your project ID or a custom name)
 
 ### Getting Firebase CI Token
 ```bash
