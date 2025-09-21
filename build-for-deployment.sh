@@ -16,6 +16,14 @@ fi
 # Copy build files to Firebase hosting directory
 echo "📁 Copying build files to Firebase hosting directory..."
 cd ..
+
+# Create build directory if it doesn't exist
+if [ ! -d "build" ]; then
+    echo "📁 Creating build directory..."
+    mkdir -p build
+fi
+
+# Clean and copy files
 rm -rf build/*
 cp -r visithome-admin-backoffice/dist/* build/
 

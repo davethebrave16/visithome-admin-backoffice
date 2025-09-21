@@ -48,6 +48,16 @@ jobs:
         run: |
           chmod +x build-for-deployment.sh
           ./build-for-deployment.sh
+          
+      # 6. Verify build directory exists
+      - name: Verify build directory
+        run: |
+          if [ ! -d "build" ]; then
+            echo "❌ Build directory not found"
+            exit 1
+          fi
+          echo "✅ Build directory created successfully"
+          ls -la build/
 
       # 5. Install Firebase CLI
       - name: Install Firebase CLI

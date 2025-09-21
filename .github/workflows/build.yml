@@ -36,7 +36,11 @@ jobs:
       # 5. Verify build output
       - name: Verify build output
         run: |
-          echo "Build completed successfully!"
+          if [ ! -d "build" ]; then
+            echo "❌ Build directory not found"
+            exit 1
+          fi
+          echo "✅ Build completed successfully!"
           echo "Build directory contents:"
           ls -la build/
           echo "Build size:"
