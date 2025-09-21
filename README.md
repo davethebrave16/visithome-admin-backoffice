@@ -2,6 +2,10 @@
 
 A React-based admin panel with Google authentication using Firebase.
 
+[![Build](https://github.com/your-username/your-repo/actions/workflows/build.yml/badge.svg)](https://github.com/your-username/your-repo/actions/workflows/build.yml)
+[![Deploy to Staging](https://github.com/your-username/your-repo/actions/workflows/deploy-staging.yml/badge.svg)](https://github.com/your-username/your-repo/actions/workflows/deploy-staging.yml)
+[![Deploy to Production](https://github.com/your-username/your-repo/actions/workflows/deploy-production.yml/badge.svg)](https://github.com/your-username/your-repo/actions/workflows/deploy-production.yml)
+
 ## Features
 
 - Google authentication via Firebase
@@ -86,6 +90,51 @@ npm run build
 ```
 
 ### 7. Deploy to Firebase Hosting
+
+#### Option A: Using GitHub Actions (Recommended)
+
+The project includes automated workflows:
+
+- **Build Check**: Runs on pull requests to `master` and `develop` branches
+- **Staging Environment**: Automatically deploys when pushing to `develop` branch
+- **Production Environment**: Automatically deploys when pushing to `master` branch
+
+**Setup GitHub Secrets:**
+1. Go to your GitHub repository
+2. Navigate to Settings → Secrets and variables → Actions
+3. Add these secrets:
+   - `FIREBASE_PROJECT_ID`: Your Firebase project ID
+   - `FIREBASE_TOKEN`: Your Firebase CI token
+   - `FIREBASE_API_KEY`: Your Firebase API key
+   - `FIREBASE_AUTH_DOMAIN`: Your Firebase auth domain
+   - `FIREBASE_STORAGE_BUCKET`: Your Firebase storage bucket
+   - `FIREBASE_MESSAGING_SENDER_ID`: Your Firebase messaging sender ID
+   - `FIREBASE_APP_ID`: Your Firebase app ID
+   - `AUTH_ACCOUNTS`: Comma-separated list of authorized emails
+
+**Getting Firebase CI Token:**
+```bash
+# Install Firebase CLI globally if not already installed
+npm install -g firebase-tools
+
+# Login and get CI token
+firebase login:ci
+
+# Copy the token and add it to GitHub Secrets
+```
+
+**Quick Setup Script:**
+```bash
+./setup-github-secrets.sh
+```
+
+This script will help you:
+1. Install Firebase CLI if needed
+2. Get your Firebase project ID
+3. Generate a CI token
+4. Provide instructions for adding GitHub secrets
+
+#### Option B: Manual Deployment
 
 ```bash
 ./build-for-deployment.sh

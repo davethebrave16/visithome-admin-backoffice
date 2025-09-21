@@ -1,0 +1,43 @@
+name: Build React App on Pull Request
+
+on:
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'visithome-admin-backoffice/package-lock.json'
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: |
+          cd visithome-admin-backoffice
+          npm install
+
+      # 4. Build React app using custom script
+      - name: Build React app
+        run: |
+          chmod +x build-for-deployment.sh
+          ./build-for-deployment.sh
+
+      # 5. Verify build output
+      - name: Verify build output
+        run: |
+          echo "Build completed successfully!"
+          echo "Build directory contents:"
+          ls -la build/
+          echo "Build size:"
+          du -sh build/
