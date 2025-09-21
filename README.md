@@ -113,6 +113,12 @@ The project includes automated workflows:
    - `FIREBASE_APP_ID`: Your Firebase app ID
    - `AUTH_ACCOUNTS`: Comma-separated list of authorized emails
 
+**Getting Firebase Hosting ID:**
+1. Go to Firebase Console → Hosting
+2. Find your hosting site
+3. The site ID is shown in the hosting dashboard (usually your project ID or a custom name)
+4. **Note**: This ID is used in the deployment command `--only hosting:SITE_ID` and is stored as a GitHub secret for security
+
 **Getting Firebase CI Token:**
 ```bash
 # Install Firebase CLI globally if not already installed
@@ -123,6 +129,54 @@ firebase login:ci
 
 # Copy the token and add it to GitHub Secrets
 ```
+
+## Manual Deployment Setup
+
+For manual deployment, you need to create a `.firebaserc` file in your project root. This file is **required** for Firebase CLI to know which project and hosting site to deploy to.
+
+### Creating .firebaserc File
+
+Create a `.firebaserc` file in your project root:
+
+```bash
+cat > .firebaserc << EOF
+{
+  "projects": {
+    "default": "your-actual-project-id"
+  },
+  "targets": {
+    "your-actual-project-id": {
+      "hosting": {
+        "admin-panel": ["your-actual-hosting-site-id"]
+      }
+    }
+  }
+}
+EOF
+```
+
+**Replace the placeholders:**
+- `your-actual-project-id` → Your Firebase project ID
+- `your-actual-hosting-site-id` → Your Firebase hosting site ID
+
+### Example .firebaserc File
+
+```json
+{
+  "projects": {
+    "default": "admin-12345"
+  },
+  "targets": {
+    "visithome-admin-12345": {
+      "hosting": {
+        "admin-panel": ["admin-12345"]
+      }
+    }
+  }
+}
+```
+
+**Note**: This file contains sensitive information and should be added to `.gitignore` to prevent accidental commits.
 
 **Quick Setup Script:**
 ```bash
@@ -146,12 +200,34 @@ This script will:
 2. Copy files to the build directory
 3. Prepare everything for deployment
 
-Then deploy using:
+**Important**: For manual deployment, you need to create a `.firebaserc` file first. This file tells Firebase CLI which project and hosting site to use.
+
+Create the `.firebaserc` file:
 ```bash
-firebase deploy --only hosting:YOUR_HOSTING_ID
+cat > .firebaserc << EOF
+{
+  "projects": {
+    "default": "YOUR_PROJECT_ID"
+  },
+  "targets": {
+    "YOUR_PROJECT_ID": {
+      "hosting": {
+        "admin-panel": ["YOUR_HOSTING_SITE_ID"]
+      }
+    }
+  }
+}
+EOF
 ```
 
-Replace `YOUR_HOSTING_ID` with your actual Firebase hosting site ID.
+Replace:
+- `YOUR_PROJECT_ID` with your actual Firebase project ID
+- `YOUR_HOSTING_SITE_ID` with your actual Firebase hosting site ID
+
+Then deploy:
+```bash
+firebase deploy --only hosting:admin-panel
+```
 
 This script will automatically:
 1. Build the React app

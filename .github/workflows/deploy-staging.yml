@@ -58,10 +58,30 @@ jobs:
           echo "✅ Build directory created successfully"
           ls -la build/
 
-      # 5. Install Firebase CLI
+      # 5. Create Firebase configuration
+      - name: Create Firebase configuration
+        run: |
+          cat > .firebaserc << EOF
+          {
+            "projects": {
+              "default": "${{ secrets.FIREBASE_PROJECT_ID }}"
+            },
+            "targets": {
+              "${{ secrets.FIREBASE_PROJECT_ID }}": {
+                "hosting": {
+                  "admin-panel": [
+                    "${{ secrets.FIREBASE_HOSTING_ID }}"
+                  ]
+                }
+              }
+            }
+          }
+          EOF
+
+      # 6. Install Firebase CLI
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
       # 7. Deploy to Firebase Hosting (Staging)
       - name: Deploy to Firebase Hosting - Staging
-        run: firebase deploy --only hosting:${{ secrets.FIREBASE_HOSTING_ID }} --project "${{ secrets.FIREBASE_PROJECT_ID }}" --token "${{ secrets.FIREBASE_TOKEN }}"
+        run: firebase deploy --only hosting:admin-panel --project "${{ secrets.FIREBASE_PROJECT_ID }}" --token "${{ secrets.FIREBASE_TOKEN }}"

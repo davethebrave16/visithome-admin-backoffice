@@ -51,6 +51,8 @@ Firebase Console → Project Settings → General → Your apps → Web app conf
 2. Find your hosting site
 3. The site ID is shown in the hosting dashboard (usually your project ID or a custom name)
 
+**Security Note**: The hosting ID is used in the deployment command `--only hosting:SITE_ID` and is stored as a GitHub secret. Never hardcode this value in configuration files like `.firebaserc` as it would expose sensitive information in the repository.
+
 ### Getting Firebase CI Token
 ```bash
 firebase login:ci
