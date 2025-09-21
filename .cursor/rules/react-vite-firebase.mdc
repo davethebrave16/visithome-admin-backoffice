@@ -1,0 +1,236 @@
+---
+description: Best practices for React + Vite + Firebase Hosting projects with specific targets
+globs:
+  - "**/*.tsx"
+  - "**/*.ts"
+  - "**/*.jsx"
+  - "**/*.js"
+  - "**/vite.config.*"
+  - "**/firebase.json"
+  - "**/.firebaserc"
+  - "**/package.json"
+alwaysApply: true
+---
+
+# React + Vite + Firebase Hosting Best Practices
+
+This guide outlines best practices for developing React applications with Vite that are deployed to Firebase Hosting with specific targets.
+
+## Project Structure
+
+### Firebase Configuration
+- **firebase.json**: Define hosting targets with proper configuration
+- **.firebaserc**: Map targets to specific hosting sites (never commit sensitive data)
+- **Environment Variables**: Use VITE_ prefix for all client-side environment variables
+- **Security**: Store sensitive configuration in GitHub Secrets for CI/CD
+
+### Vite Configuration
+- Use Vite for fast development and optimized production builds
+- Configure environment variables with VITE_ prefix
+- Set up proper aliasing for cleaner imports
+- Optimize build output for Firebase Hosting
+
+## Firebase Hosting Best Practices
+
+### Target Configuration
+```json
+// firebase.json
+{
+  "hosting": [
+    {
+      "target": "admin-panel",
+      "public": "build",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Environment Variables
+- Use VITE_ prefix for all client-side environment variables
+- Store sensitive data in GitHub Secrets for CI/CD
+- Never hardcode Firebase project IDs or hosting site IDs
+- Create .firebaserc dynamically in CI/CD workflows
+
+### Deployment Commands
+```bash
+# Manual deployment
+firebase deploy --only hosting:admin-panel
+
+# CI/CD deployment
+firebase deploy --only hosting:admin-panel --project "${{ secrets.FIREBASE_PROJECT_ID }}" --token "${{ secrets.FIREBASE_TOKEN }}"
+```
+
+## React + Vite Development
+
+### Component Architecture
+- Use functional components with TypeScript interfaces
+- Implement proper component composition
+- Extract reusable logic into custom hooks
+- Use React.memo() strategically for performance
+- Implement proper cleanup in useEffect hooks
+
+### State Management
+- Use React Context for global state
+- Implement custom hooks for complex state logic
+- Use useState for component-level state
+- Avoid prop drilling with proper context usage
+
+### Performance Optimization
+- Use useCallback for memoizing callback functions
+- Implement useMemo for expensive computations
+- Avoid inline function definitions in JSX
+- Implement code splitting using dynamic imports
+- Use proper key props in lists
+
+### Styling Guidelines
+- Use CSS modules or styled-components for component-specific styles
+- Implement responsive design with mobile-first approach
+- Use CSS custom properties for theming
+- Ensure proper color contrast ratios for accessibility
+- Maintain consistent spacing and typography
+
+## Security Best Practices
+
+### Environment Variables
+- Never expose sensitive data in client-side code
+- Use environment variables for configuration
+- Validate environment variables at build time
+- Store secrets in secure CI/CD systems
+
+### Firebase Security
+- Implement proper Firebase security rules
+- Use Firebase Authentication for user management
+- Validate user permissions on the client and server
+- Implement proper error handling for authentication failures
+
+### Code Security
+- Sanitize user inputs to prevent XSS attacks
+- Use HTTPS for all communications
+- Implement proper CORS policies
+- Validate all data before processing
+
+## CI/CD Best Practices
+
+### GitHub Actions
+- Create separate workflows for staging and production
+- Use environment variables for all sensitive data
+- Implement proper build and deployment steps
+- Add proper error handling and rollback mechanisms
+
+### Build Process
+- Use Vite for optimized production builds
+- Implement proper asset optimization
+- Generate source maps for debugging
+- Test builds before deployment
+
+### Deployment Strategy
+- Use Firebase targets for different environments
+- Implement proper versioning and rollback
+- Monitor deployment status and errors
+- Use proper caching strategies
+
+## Error Handling
+
+### Client-Side Error Handling
+- Implement error boundaries for React components
+- Use proper try-catch blocks for async operations
+- Provide meaningful error messages to users
+- Log errors for debugging purposes
+
+### Firebase Error Handling
+- Handle Firebase authentication errors gracefully
+- Implement proper retry mechanisms for network failures
+- Use Firebase error codes for specific error handling
+- Provide fallback UI for critical errors
+
+## Testing Strategy
+
+### Unit Testing
+- Test individual components and functions
+- Mock Firebase services for isolated testing
+- Use React Testing Library for component testing
+- Implement proper test coverage
+
+### Integration Testing
+- Test complete user workflows
+- Test Firebase integration points
+- Use proper test data and cleanup
+- Test error scenarios and edge cases
+
+## Performance Monitoring
+
+### Build Optimization
+- Optimize bundle size with Vite
+- Implement proper code splitting
+- Use lazy loading for non-critical components
+- Monitor and optimize asset loading
+
+### Runtime Performance
+- Monitor Core Web Vitals
+- Implement proper caching strategies
+- Use Firebase Performance Monitoring
+- Optimize images and assets
+
+## Documentation
+
+### Code Documentation
+- Document all public functions and components
+- Use JSDoc for function documentation
+- Document Firebase configuration and setup
+- Maintain up-to-date README files
+
+### Deployment Documentation
+- Document deployment process and requirements
+- Provide troubleshooting guides
+- Document environment variable requirements
+- Maintain deployment checklists
+
+## Accessibility
+
+### Core Requirements
+- Use semantic HTML elements
+- Implement proper ARIA attributes
+- Ensure keyboard navigation support
+- Maintain proper color contrast ratios
+- Test with screen readers
+
+### Firebase Integration
+- Ensure Firebase UI components are accessible
+- Implement proper focus management
+- Provide alternative text for images
+- Use proper form labels and error messages
+
+## Maintenance
+
+### Code Maintenance
+- Regular dependency updates
+- Code refactoring and optimization
+- Performance monitoring and improvements
+- Security updates and patches
+
+### Firebase Maintenance
+- Regular security rule reviews
+- Monitor Firebase usage and costs
+- Update Firebase SDK versions
+- Review and update hosting configuration
+
+## Troubleshooting
+
+### Common Issues
+- Firebase target not found errors
+- Environment variable not loaded
+- Build failures and optimization issues
+- Deployment configuration problems
+
+### Debugging
+- Use Firebase CLI debug mode
+- Check browser console for errors
+- Monitor Firebase console for issues
+- Use proper logging and error tracking

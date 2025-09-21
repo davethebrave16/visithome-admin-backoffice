@@ -26,15 +26,14 @@ jobs:
       # 3. Create environment variables
       - name: Create environment variables
         run: |
-          cd visithome-admin-backoffice
-          cat > .env << EOF
-          VITE_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}
-          VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.FIREBASE_AUTH_DOMAIN }}
-          VITE_FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}
-          VITE_FIREBASE_STORAGE_BUCKET=${{ secrets.FIREBASE_STORAGE_BUCKET }}
-          VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
-          VITE_FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID }}
-          VITE_AUTH_ACCOUNTS=${{ secrets.AUTH_ACCOUNTS }}
+          cat > visithome-admin-backoffice/.env << EOF
+          VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID=${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET=${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID=${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_AUTH_ACCOUNTS=${{ secrets.VITE_AUTH_ACCOUNTS }}
           EOF
 
       # 4. Install dependencies
@@ -59,10 +58,30 @@ jobs:
           echo "✅ Build directory created successfully"
           ls -la build/
 
-      # 5. Install Firebase CLI
+      # 5. Create Firebase configuration
+      - name: Create Firebase configuration
+        run: |
+          cat > .firebaserc << EOF
+          {
+            "projects": {
+              "default": "${{ secrets.FIREBASE_PROJECT_ID }}"
+            },
+            "targets": {
+              "${{ secrets.FIREBASE_PROJECT_ID }}": {
+                "hosting": {
+                  "admin-panel": [
+                    "${{ secrets.FIREBASE_HOSTING_ID }}"
+                  ]
+                }
+              }
+            }
+          }
+          EOF
+
+      # 6. Install Firebase CLI
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      # 6. Deploy to Firebase Hosting (Staging)
+      # 7. Deploy to Firebase Hosting (Staging)
       - name: Deploy to Firebase Hosting - Staging
-        run: firebase deploy --only hosting --project "${{ secrets.FIREBASE_PROJECT_ID }}" --token "${{ secrets.FIREBASE_TOKEN }}"
+        run: firebase deploy --only hosting:admin-panel --project "${{ secrets.FIREBASE_PROJECT_ID }}" --token "${{ secrets.FIREBASE_TOKEN }}"
