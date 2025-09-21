@@ -12,9 +12,15 @@ const Dashboard: React.FC = () => {
 		<div className="dashboard-container">
 			<nav className="navbar">
 				<div className="navbar-content">
-					<h1 className="navbar-title">
-						VisitHome Admin Backoffice
-					</h1>
+					<div className="navbar-logo">
+						<img 
+							src="/VisitHome__03_Badge_Gradient.svg" 
+							alt="VisitHome Logo" 
+						/>
+						<h1 className="navbar-title">
+							VisitHome Admin Backoffice
+						</h1>
+					</div>
 					<div className="navbar-user">
 						<span className="user-info">
 							Welcome, {currentUser?.displayName || currentUser?.email}

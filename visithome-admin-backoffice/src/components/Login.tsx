@@ -11,6 +11,11 @@ const Login: React.FC = () => {
 	return (
 		<div className="min-h-screen">
 			<div className="login-container">
+				<img 
+					src="/VisitHome__03_Badge_Gradient.svg" 
+					alt="VisitHome Logo" 
+					className="login-logo"
+				/>
 				<h2 className="login-title">
 					VisitHome Admin Backoffice
 				</h2>
