@@ -85,6 +85,57 @@ The app will be available at `http://localhost:5173`
 npm run build
 ```
 
+### 7. Deploy to Firebase Hosting
+
+```bash
+./build-for-deployment.sh
+```
+
+This script will:
+1. Build the React app
+2. Copy files to the build directory
+3. Prepare everything for deployment
+
+Then deploy using:
+```bash
+firebase deploy --only hosting
+```
+
+This script will automatically:
+1. Build the React app
+2. Copy files to the build directory
+3. Deploy to Firebase Hosting
+
+#### Prerequisites
+
+Make sure you have:
+- Firebase CLI installed (`npm install -g firebase-tools`)
+- Logged in to Firebase (`firebase login`)
+- Selected the correct project (`firebase use your-project-id`)
+
+**Note**: If you encounter Firebase CLI issues, you can also deploy manually through the Firebase Console:
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Select your project
+3. Go to Hosting
+4. Click "Add another site" or use existing site
+5. Upload the contents of the `build/` directory
+
+#### Environment Variables for Production
+
+Before deploying, make sure your `.env` file in `visithome-admin-backoffice/` contains your actual Firebase configuration:
+
+```env
+VITE_FIREBASE_API_KEY=your_actual_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=123456789012
+VITE_FIREBASE_APP_ID=1:123456789012:web:abcdef1234567890
+VITE_AUTH_ACCOUNTS=davethebrave160691@gmail.com,nicotedeschi.nt@gmail.com
+```
+
+**Important**: Never commit your `.env` file to version control. It should be in your `.gitignore`.
+
 ## Access Control
 
 Only users with emails listed in the `VITE_AUTH_ACCOUNTS` environment variable can access the admin panel. The emails should be comma-separated.
