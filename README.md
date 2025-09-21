@@ -1,0 +1,127 @@
+# VisitHome Admin Backoffice
+
+A React-based admin panel with Google authentication using Firebase.
+
+## Features
+
+- Google authentication via Firebase
+- Email-based access control
+- Modern React with TypeScript
+- Responsive design
+
+## Setup
+
+### 1. Create Firebase Web App
+
+**IMPORTANT**: You need to create a web app in Firebase Console first.
+
+1. **Go to Firebase Console**: [https://console.firebase.google.com/](https://console.firebase.google.com/)
+2. **Select your existing project**
+3. **Add a new web app**:
+   - Click the **gear icon** (⚙️) next to "Project Overview"
+   - Select **"Project settings"**
+   - Scroll down to **"Your apps"** section
+   - Click **"Add app"** button
+   - Choose the **Web icon** (`</>`)
+   - **App nickname**: Enter `visithome-admin-backoffice`
+   - Click **"Register app"**
+
+4. **Copy the configuration** that Firebase generates (you'll see a code block with `firebaseConfig`)
+
+### 2. Environment Configuration
+
+Create a `.env` file in the `visithome-admin-backoffice` directory with your Firebase configuration:
+
+```env
+# Firebase Configuration (copy from Firebase Console)
+VITE_FIREBASE_API_KEY=AIzaSyC...your_actual_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=123456789012
+VITE_FIREBASE_APP_ID=1:123456789012:web:abcdef1234567890
+
+# Authorized Email Accounts (comma-separated)
+VITE_AUTH_ACCOUNTS=davethebrave160691@gmail.com,nicotedeschi.nt@gmail.com
+```
+
+**How to get these values:**
+- All values come from the `firebaseConfig` object shown after creating the web app
+- `apiKey` → `VITE_FIREBASE_API_KEY`
+- `authDomain` → `VITE_FIREBASE_AUTH_DOMAIN`
+- `projectId` → `VITE_FIREBASE_PROJECT_ID`
+- `storageBucket` → `VITE_FIREBASE_STORAGE_BUCKET`
+- `messagingSenderId` → `VITE_FIREBASE_MESSAGING_SENDER_ID`
+- `appId` → `VITE_FIREBASE_APP_ID`
+
+### 3. Enable Google Authentication
+
+1. In Firebase Console, go to **"Authentication"** in the left sidebar
+2. Click **"Get started"** if you haven't set it up yet
+3. Go to **"Sign-in method"** tab
+4. Click on **"Google"** provider
+5. Toggle **"Enable"** to ON
+6. Set a **Project support email** (required)
+7. Click **"Save"**
+
+### 4. Install Dependencies
+
+```bash
+cd visithome-admin-backoffice
+npm install
+```
+
+### 5. Run Development Server
+
+```bash
+npm run dev
+```
+
+The app will be available at `http://localhost:5173`
+
+### 6. Build for Production
+
+```bash
+npm run build
+```
+
+## Access Control
+
+Only users with emails listed in the `VITE_AUTH_ACCOUNTS` environment variable can access the admin panel. The emails should be comma-separated.
+
+**Example:**
+```env
+VITE_AUTH_ACCOUNTS=admin@example.com,user@example.com,another@example.com
+```
+
+## Project Structure
+
+```
+visithome-admin-backoffice/
+├── src/
+│   ├── components/
+│   │   ├── Dashboard.tsx    # Main admin dashboard
+│   │   ├── Login.tsx        # Google login component
+│   │   └── Loading.tsx      # Loading spinner
+│   ├── contexts/
+│   │   └── AuthContext.tsx  # Authentication context
+│   ├── firebase.ts          # Firebase configuration
+│   └── App.tsx              # Main app component
+├── .env                     # Environment variables (create this)
+└── package.json
+```
+
+## Usage
+
+1. **Start the development server**: `npm run dev`
+2. **Navigate to**: `http://localhost:5173`
+3. **Click "Sign in with Google"**
+4. **Use an authorized email address** (must be in `VITE_AUTH_ACCOUNTS`)
+5. **Access the admin dashboard** upon successful authentication
+
+## Troubleshooting
+
+- **"User is not allowed to access"** - The email you're using isn't in the `VITE_AUTH_ACCOUNTS` list
+- **Firebase errors** - Double-check that all environment variables are correctly copied from Firebase Console
+- **Google sign-in not working** - Make sure Google authentication is enabled in Firebase Console
+- **App not loading** - Ensure the `.env` file is in the `visithome-admin-backoffice` directory
