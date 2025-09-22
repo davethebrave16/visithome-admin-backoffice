@@ -12,6 +12,7 @@
   "dependencies": {
     "firebase": "^12.3.0",
     "react": "^19.1.1",
+    "react-admin": "^5.11.3",
     "react-dom": "^19.1.1"
   },
   "devDependencies": {

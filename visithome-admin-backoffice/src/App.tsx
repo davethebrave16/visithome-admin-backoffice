@@ -1,25 +1,29 @@
-import React from 'react'
-import { AuthProvider, useAuth } from './contexts/AuthContext'
+import { Admin, Resource } from 'react-admin'
+import { dataProvider } from './providers/dataProvider'
+import { authProvider } from './providers/authProvider'
+import { Layout } from './layout/Layout'
+import { theme } from './theme'
+import { UserList, UserShow } from './resources/users'
 import Login from './components/Login'
-import Dashboard from './components/Dashboard'
-import Loading from './components/Loading'
 import './App.css'
-
-const AppContent: React.FC = () => {
-	const { currentUser, loading } = useAuth()
-
-	if (loading) {
-		return <Loading />
-	}
-
-	return currentUser ? <Dashboard /> : <Login />
-}
 
 function App() {
 	return (
-		<AuthProvider>
-			<AppContent />
-		</AuthProvider>
+		<Admin
+			dataProvider={dataProvider}
+			authProvider={authProvider}
+			layout={Layout}
+			theme={theme}
+			loginPage={Login}
+			title="VisitHome Admin Backoffice"
+		>
+			<Resource 
+				name="user" 
+				list={UserList} 
+				show={UserShow}
+				options={{ label: 'Users' }}
+			/>
+		</Admin>
 	)
 }
 
