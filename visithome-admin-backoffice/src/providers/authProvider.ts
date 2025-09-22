@@ -24,6 +24,7 @@ export const authProvider: AuthProvider = {
 			
 			return Promise.resolve()
 		} catch (error) {
+			console.error('Authentication failed:', error)
 			throw new Error('Authentication failed')
 		}
 	},
@@ -33,6 +34,7 @@ export const authProvider: AuthProvider = {
 			await signOut(auth)
 			return Promise.resolve()
 		} catch (error) {
+			console.error('Logout failed:', error)
 			throw new Error('Logout failed')
 		}
 	},

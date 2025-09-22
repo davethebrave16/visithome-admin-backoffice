@@ -33,9 +33,27 @@
   font-family: 'TT Commons', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 }
 
+/* AppBar styling */
 .ra-app .MuiAppBar-root {
   background: linear-gradient(135deg, #007fa9 0%, #063349 100%) !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 20px rgba(0, 127, 169, 0.15) !important;
+}
+
+/* Add VisitHome logo to the AppBar */
+.ra-app .MuiAppBar-root .MuiToolbar-root {
+  position: relative;
+}
+
+.ra-app .MuiAppBar-root .MuiToolbar-root::before {
+  content: '';
+  background-image: url('/VisitHome__03_Badge_Gradient.svg');
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  background-position: left center;
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+  display: inline-block;
 }
 
 .ra-app .MuiButton-contained {
